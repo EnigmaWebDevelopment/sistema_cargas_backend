@@ -58,8 +58,7 @@ router.post(
         if (user[0].length > 0) {
           return Promise.reject("Este e-mail já está cadastrado.");
         }
-      })
-      .normalizeEmail(),
+      }),
 
     body("password")
       .trim()
