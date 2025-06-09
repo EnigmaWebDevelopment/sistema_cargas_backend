@@ -1,29 +1,32 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const authRoutes = require('./routes/auth');
-const errorController = require('./controllers/error');
+const express = require("express");
+const bodyParser = require("body-parser");
+const authRoutes = require("./routes/auth");
+const logisticRoutes = require("./routes/logistic");
+const errorController = require("./controllers/error");
 const app = express();
 const ports = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PUT, DELETE, OPTIONS'
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
   );
   res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Content-Type, Accept, X-Custom-Header, Authorization'
+    "Access-Control-Allow-Headers",
+    "Content-Type, Accept, X-Custom-Header, Authorization"
   );
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
   next();
 });
 
-app.use('/auth', authRoutes);
+app.use("/auth", authRoutes);
+
+app.use("/logistic", logisticRoutes);
 
 app.use(errorController.get404);
 

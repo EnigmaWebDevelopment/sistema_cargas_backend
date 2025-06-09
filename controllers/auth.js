@@ -70,12 +70,18 @@ exports.login = async (req, res, next) => {
     const token = jwt.sign(
       {
         email: storedUser.email,
-        userId: storedUser.id,
+        userId: storedUser.uuid,
       },
       "secretfortoken",
       { expiresIn: "1h" }
     );
-    res.status(200).json({ token: token, userId: storedUser.id });
+    res
+      .status(200)
+      .json({
+        token: token,
+        userId: storedUser.uuid,
+        tipeUser: storedUser.tipe,
+      });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
