@@ -147,3 +147,24 @@ exports.postDelivery = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.putStatus = async (req, res, next) => {
+  const uuid_delivery = req.body.uuid_delivery;
+  const status = req.body.status;
+
+  const logisticDetails = {
+    uuid_delivery: uuid_delivery,
+    status: status,
+  };
+  try {
+    const deliveryResponse = await Logistic.putStatus(logisticDetails);
+    res.status(200).json({
+      response: "Status de entrega atualizado com sucesso! ",
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
